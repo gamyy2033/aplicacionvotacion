@@ -1,0 +1,167 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Elecciones</title>
+
+    <!-- Bootstrap y estilos -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'assets/libs/flot/css/float-chart.css' %}">
+    <link rel="stylesheet" href="{% static 'dist/css/style.min.css' %}">
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <style>
+        .sidebar-nav .nav-link {
+            font-size: 1.2rem; /* Aumenta el tamaño de la letra del menú */
+            padding: 12px 15px;
+        }
+        .dataTables_wrapper .dataTables_filter input,
+        .dataTables_wrapper .dataTables_length select,
+        .dataTables_wrapper table {
+            font-size: 1.1rem; /* Aumenta el tamaño de la tabla */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main-wrapper" class="d-flex flex-column min-vh-100">
+        <!-- Header -->
+        <header class="topbar navbar navbar-expand-md navbar-dark bg-dark mb-4">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{% url 'index' %}">
+                    <img src="{% static 'assets/images/logo-icon.png' %}" alt="Logo" class="light-logo" width="30" height="30">
+                    <span class="logo-text ms-2 text-white">Sistema de Elecciones</span>
+                </a>
+
+                <!-- Navbar toggler -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto">
+                      
+                    </ul>
+                </div>
+            </div>
+        </header>
+
+        <!-- Sidebar -->
+        <aside class="left-sidebar bg-dark">
+            <div class="scroll-sidebar">
+                <nav class="sidebar-nav">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{% url 'listar_partidos' %}">
+                                <i class="mdi mdi-account-group"></i> Partidos Políticos
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{% url 'listar_cargos' %}">
+                                <i class="mdi mdi-briefcase"></i> Crear un Cargo
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{% url 'listar_candidatos' %}">
+                                <i class="mdi mdi-account-tie"></i> Candidatos
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{% url 'listar_ubicaciones' %}">
+                                <i class="mdi mdi-map-marker"></i> Ubicaciones
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{% url 'listar_votantes' %}">
+                                <i class="mdi mdi-checkbox-marked-circle-outline"></i> Votaciones
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{% url 'listar_recintos' %}">
+                                <i class="mdi mdi-home-map-marker"></i> Recintos Electorales
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{% url 'listar_juntas' %}">
+                                <i class="mdi mdi-account-check"></i> Juntas Electorales
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{% url 'reporte_general' %}">
+                                <i class="mdi mdi-chart-bar"></i> Reportes
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="page-wrapper flex-fill bg-light p-4">
+            <div class="container">
+                {% block content %}
+                    <!-- Contenido principal: Mensajes de concientización sobre el voto -->
+                    <div class="alert alert-info">
+                        <h2>¡Tu voto es importante!</h2>
+                        <p>El voto es una de las formas más poderosas de influir en el futuro de tu país. Tu participación asegura que nuestras voces sean escuchadas en la toma de decisiones políticas importantes.</p>
+                    </div>
+
+                    <h3>¿Por qué es importante votar?</h3>
+                    <p>Al votar, no solo eliges a tus representantes, sino que también contribuyes al fortalecimiento de la democracia. Cada voto cuenta para garantizar que las decisiones que afectan a la comunidad sean tomadas en consideración por todos.</p>
+
+                    <h3>Consejos para un voto informado</h3>
+                    <ul>
+                        <li>Infórmate sobre las propuestas y los candidatos antes de votar.</li>
+                        <li>Revisa los programas electorales y las visiones de los candidatos.</li>
+                        <li>No dejes que otros decidan por ti. Tu voto es tu voz.</li>
+                    </ul>
+
+                    <h3>Si no votas...</h3>
+                    <p>Tu oportunidad de influir en la política se pierde. Si no participas, otros tomarán decisiones por ti, y los resultados no reflejarán tu perspectiva.</p>
+
+                   
+                {% endblock %}
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-dark text-white text-center py-3 mt-auto">
+            <p>&copy; 2025 Sistema de Elecciones. Todos los derechos reservados.</p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'assets/libs/jquery/dist/jquery.min.js' %}"></script>
+    <script src="{% static 'dist/js/custom.min.js' %}"></script>
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+
+    <!-- Inicialización de DataTables -->
+    <script>
+        $(document).ready(function() {
+            // Inicializar DataTables en todas las tablas con la clase .table
+            $('table').DataTable({
+                "paging": true,
+                "lengthMenu": [[5, 10, 25, -1], [5, 10, 25, "Todos"]], 
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por página",
+                    "zeroRecords": "No se encontraron resultados",
+                    "info": "Mostrando página _PAGE_ de _PAGES_",
+                    "infoEmpty": "No hay registros disponibles",
+                    "infoFiltered": "(filtrado de _MAX_ registros totales)"
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

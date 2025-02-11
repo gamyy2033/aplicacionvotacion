@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mb-4">Eliminar Partido Político</h2>
+    <p>¿Estás seguro de que deseas eliminar el partido <strong>{{ partido.nombre }}</strong>?</p>
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Eliminar</button>
+        <a href="{% url 'listar_partidos' %}" class="btn btn-secondary ms-3">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

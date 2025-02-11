@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center my-4">
+        <h2 style="font-size: 2rem;">Listado de Candidatos</h2>
+        <a href="{% url 'crear_candidato' %}" class="btn btn-primary btn-lg">Crear Candidato</a>
+    </div>
+    
+    <table id="candidatosTable" class="table table-striped table-bordered" style="font-size: 1.2rem;">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Foto</th>
+                <th>Nombre Completo</th>
+                <th>Partido</th>
+                <th>Cargo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for candidato in candidatos %}
+            <tr>
+                <td>{{ candidato.id }}</td>
+                <td>
+                    {% if candidato.foto %}
+                        <img src="{{ candidato.foto.url }}" alt="Foto de {{ candidato.nombre }}" class="img-thumbnail" width="60">
+                    {% else %}
+                        <span class="text-muted">Sin foto</span>
+                    {% endif %}
+                </td>
+                <td>{{ candidato.nombre }} {{ candidato.apellido }}</td> <!-- Display Full Name -->
+                <td>{{ candidato.partido.nombre }}</td> <!-- Display Party Name -->
+                <td>{{ candidato.cargo.nombre }}</td> <!-- Display Position -->
+                <td>
+                    <a href="{% url 'editar_candidato' candidato.id %}" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="{% url 'eliminar_candidato' candidato.id %}" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este candidato?');">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#candidatosTable').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.12.1/i18n/Spanish.json"
+            }
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center my-4">
+        <h2 style="font-size: 2rem;">Listado de Recintos Electorales</h2>
+        <a href="{% url 'crear_recinto' %}" class="btn btn-primary btn-lg">Crear Recinto</a>
+    </div>
+    
+    <table id="recintosTable" class="table table-striped table-bordered" style="font-size: 1.2rem;">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Ubicación</th> <!-- Display the Ubicación field -->
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for recinto in recintos %}
+            <tr>
+                <td>{{ recinto.id }}</td>
+                <td>{{ recinto.nombre }}</td>
+                <td>{{ recinto.ubicacion.nombre }} - {{ recinto.ubicacion.tipo }}</td> <!-- Display Ubicación's nombre and tipo -->
+                <td>
+                    <a href="{% url 'editar_recinto' recinto.id %}" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="{% url 'eliminar_recinto' recinto.id %}" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este recinto?');">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#recintosTable').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.12.1/i18n/Spanish.json"
+            }
+        });
+    });
+</script>
+{% endblock %}

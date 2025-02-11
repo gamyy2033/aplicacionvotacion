@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center my-4">
+        <h2 style="font-size: 2rem;">Listado de Juntas Electorales</h2>
+        <a href="{% url 'crear_junta' %}" class="btn btn-primary btn-lg">Crear Junta</a>
+    </div>
+    
+    <table id="juntasTable" class="table table-striped table-bordered" style="font-size: 1.2rem;">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Recinto</th> <!-- Display the Recinto -->
+                <th>NUMERO DE JUNTA</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for junta in juntas %}
+            <tr>
+                <td>{{ junta.id }}</td>
+                <td>{{ junta.numero }}</td>
+                <td>{{ junta.recinto.nombre }} - {{ junta.recinto.ubicacion.nombre }} ({% if junta.recinto.ubicacion.tipo %}{{ junta.recinto.ubicacion.tipo }}{% else %}Desconocido{% endif %})</td> <!-- Display Recinto's name and location details -->
+                <td>
+                    <a href="{% url 'editar_junta' junta.id %}" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="{% url 'eliminar_junta' junta.id %}" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar esta junta?');">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#juntasTable').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.12.1/i18n/Spanish.json"
+            }
+        });
+    });
+</script>
+{% endblock %}

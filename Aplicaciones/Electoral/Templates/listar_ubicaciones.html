@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center my-4">
+        <h2 style="font-size: 2rem;">Listado de Ubicaciones</h2>
+        <a href="{% url 'crear_ubicacion' %}" class="btn btn-primary btn-lg">Crear Ubicación</a>
+    </div>
+    
+    <table id="ubicacionesTable" class="table table-striped table-bordered" style="font-size: 1.2rem;">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Tipo</th> <!-- Display the 'tipo' field -->
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ubicacion in ubicaciones %}
+            <tr>
+                <td>{{ ubicacion.id }}</td>
+                <td>{{ ubicacion.nombre }}</td>
+                <td>{{ ubicacion.tipo }}</td> <!-- Display the 'tipo' field -->
+                <td>
+                    <a href="{% url 'editar_ubicacion' ubicacion.id %}" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="{% url 'eliminar_ubicacion' ubicacion.id %}" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar esta ubicación?');">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#ubicacionesTable').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.12.1/i18n/Spanish.json"
+            }
+        });
+    });
+</script>
+{% endblock %}

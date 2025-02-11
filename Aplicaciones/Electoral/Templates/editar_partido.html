@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Editar Partido</h1>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <!-- Campos Nombre y Siglas -->
+    <div>
+      <label for="{{ form.nombre.id_for_label }}">Nombre:</label>
+      {{ form.nombre }}
+    </div>
+    <div>
+      <label for="{{ form.siglas.id_for_label }}">Siglas:</label>
+      {{ form.siglas }}
+    </div>
+    
+    <!-- Mostrar el logo actual si existe -->
+    <div>
+      <label for="{{ form.logo.id_for_label }}">Logo:</label>
+      {% if form.instance.logo %}
+        <div>
+          <p>Logo actual:</p>
+          <img src="{{ form.instance.logo.url }}" alt="Logo actual" width="100">
+        </div>
+      {% endif %}
+      <input type="file" name="logo" id="id_logo">
+    </div>
+    
+    <button type="submit">Actualizar</button>
+  </form>
+{% endblock %}

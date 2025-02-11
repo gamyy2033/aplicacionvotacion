@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center my-4">
+        <h2 style="font-size: 2rem;">Listado de Cargos</h2>
+        <a href="{% url 'crear_cargo' %}" class="btn btn-primary btn-lg">Crear Cargo</a>
+    </div>
+    
+    <table id="cargosTable" class="table table-striped table-bordered" style="font-size: 1.2rem;">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cargo in cargos %}
+            <tr>
+                <td>{{ cargo.id }}</td>
+                <td>{{ cargo.nombre }}</td>
+                <td>
+                    <a href="{% url 'editar_cargo' cargo.id %}" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="{% url 'eliminar_cargo' cargo.id %}" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este cargo?');">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#cargosTable').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.12.1/i18n/Spanish.json"
+            }
+        });
+    });
+</script>
+{% endblock %}
