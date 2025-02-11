@@ -49,7 +49,7 @@ ROOT_URLCONF = 'Mesa.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'Templates')],  # Asegúrate de que la carpeta Templates esté correctamente ubicada
+        'DIRS': [BASE_DIR, 'Templates'],  # Asegúrate de que la carpeta Templates esté correctamente ubicada
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
